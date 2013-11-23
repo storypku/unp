@@ -408,7 +408,7 @@ int		 snprintf(char *, size_t, const char *, ...);
 void	 Connect_timeo(int, const SA *, socklen_t, int);
 int		 Family_to_level(int);
 struct addrinfo *Host_serv(const char *, const char *, int, int);
-const char		*Inet_ntop(int, const void *, char *, size_t);
+const char		*Inet_ntop(int, const void *, char *, socklen_t);
 void			 Inet_pton(int, const char *, void *);
 char			*If_indextoname(unsigned int, char *);
 unsigned int		 If_nametoindex(const char *);
