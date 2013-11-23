@@ -95,7 +95,8 @@ err_doit(int errnoflag, int level, const char *fmt, va_list ap)
 #endif
 	n = strlen(buf);
 	if (errnoflag)
-		snprintf(buf + n, MAXLINE - n, ": %s", strerror(errno_save));
+		snprintf(buf + n, MAXLINE - n, ": [%s] %s", (errno_save > 0 && errno_save <= MAX_ENAME)?
+						ename[errno_save]: "?UNKNOWN?", strerror(errno_save));
 	strcat(buf, "\n");
 
 	if (daemon_proc) {
