@@ -14,8 +14,13 @@ main(int argc, char **argv)
 
 	bzero(&servaddr, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(7);
+	servaddr.sin_port = htons(SERV_PORT);
 	Inet_pton(AF_INET, argv[1], &servaddr.sin_addr);
+
+	/* Ignore the SIGPIPE signal generated when trying to write to
+	 * the socket that has received an RST. */ 
+	if(signal(SIGPIPE, SIG_IGN) == SIG_ERR)
+		err_sys("signal");
 
 	Connect(sockfd, (SA *) &servaddr, sizeof(servaddr));
 
