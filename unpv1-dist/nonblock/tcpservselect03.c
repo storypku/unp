@@ -8,6 +8,9 @@ main(int argc, char **argv)
 	ssize_t				n;
 	fd_set				rset, allset;
 	char				line[MAXLINE];
+#ifdef NOTDEF
+	char                cliaddrstr[INET_ADDRSTRLEN];
+#endif
 	socklen_t			clilen;
 	struct sockaddr_in	cliaddr, servaddr;
 
@@ -40,7 +43,7 @@ main(int argc, char **argv)
 			connfd = Accept(listenfd, (SA *) &cliaddr, &clilen);
 #ifdef	NOTDEF
 			printf("new client: %s, port %d\n",
-					Inet_ntop(AF_INET, &cliaddr.sin_addr, 4, NULL),
+					Inet_ntop(AF_INET, &cliaddr.sin_addr, cliaddrstr, sizeof(cliaddrstr)),
 					ntohs(cliaddr.sin_port));
 #endif
 
