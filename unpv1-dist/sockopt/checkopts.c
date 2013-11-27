@@ -2,6 +2,7 @@
 /* *INDENT-OFF* */
 #include	"unp.h"
 #include	<netinet/tcp.h>		/* for TCP_xxx defines */
+#include 	<netinet/sctp.h>	/* for SCTP_xxx defines */
 
 union val {
   int				i_val;
@@ -41,7 +42,11 @@ struct sock_opts {
 	{ "SO_REUSEPORT",		0,			0,				NULL },
 #endif
 	{ "SO_TYPE",			SOL_SOCKET,	SO_TYPE,		sock_str_int },
+#ifdef SO_USELOOPBACK
 	{ "SO_USELOOPBACK",		SOL_SOCKET,	SO_USELOOPBACK,	sock_str_flag },
+#else
+	{ "SO_USELOOPBACK",		0,			0,				NULL},
+#endif
 	{ "IP_TOS",				IPPROTO_IP,	IP_TOS,			sock_str_int },
 	{ "IP_TTL",				IPPROTO_IP,	IP_TTL,			sock_str_int },
 #ifdef	IPV6_DONTFRAG
@@ -72,7 +77,7 @@ struct sock_opts {
 	{ "SCTP_MAXBURST",		0,			0,				NULL },
 #endif
 #ifdef	SCTP_MAXSEG
-	{ "SCTP_MAXSEG",		IPPROTO_SCTP,SCTP_MAXSEG,	sock_str_int },
+	{ "SCTP_MAXSEG",		IPPROTO_SCTP, SCTP_MAXSEG,	sock_str_int },
 #else
 	{ "SCTP_MAXSEG",		0,			0,				NULL },
 #endif
@@ -183,7 +188,7 @@ sock_str_timeval(union val *ptr, int len)
 		snprintf(strres, sizeof(strres),
 				 "size (%d) not sizeof(struct timeval)", len);
 	else
-		snprintf(strres, sizeof(strres), "%d sec, %d usec",
+		snprintf(strres, sizeof(strres), "%ld sec, %ld usec",
 				 tvptr->tv_sec, tvptr->tv_usec);
 	return(strres);
 }
