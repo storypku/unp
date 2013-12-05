@@ -3,4 +3,6 @@ unpv1-dist/Make.defines
 unpv1-dist/config.status
 unpv1-dist/config.log
 config.h
-ename.c.inc
+include/ename.c.inc
+*.dylib
+*.so
