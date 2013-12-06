@@ -6,3 +6,6 @@ config.h
 include/ename.c.inc
 *.dylib
 *.so
+*.a
+*.lc
+*.lh
